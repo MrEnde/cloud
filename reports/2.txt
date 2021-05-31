@@ -1,0 +1,11 @@
+ * Support for docker and docker-compose has been added.
+
+ * Dividing the project into client and server.
+
+ ** Server
+
+   * Almost done the mechanism of commands for the client
+
+   *** In future
+
+   * Add ORM Hibernate support
