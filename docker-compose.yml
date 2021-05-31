@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  cloud:
+    build:
+      context: .
+      dockerfile: ./docker/cloud/Dockerfile
+    command: java -jar /app/server.jar
+    volumes:
+      - dev_cloud_data:/data:cached,Z
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    networks:
+      - cloud-network
+
+  db:
+    image: postgres:13.2-alpine
+    volumes:
+      - dev_db_data:/var/lib/postgresql/data/:cached,Z
+      - dev_db_data_backups:/backups:cached,z
+    env_file:
+      - ./config/env/db.env
+    expose:
+      - 5432
+    networks:
+      - cloud-network
+
+networks:
+  cloud-network:
+
+volumes:
+  dev_cloud_data: {}
+  dev_db_data: {}
+  dev_db_data_backups: {}
