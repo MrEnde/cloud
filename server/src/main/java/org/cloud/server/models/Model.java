@@ -1,2 +1,3 @@
-package org.cloud.server.models;public interface Model {
-}
+package org.cloud.server.models;
+
+public interface Model { }
