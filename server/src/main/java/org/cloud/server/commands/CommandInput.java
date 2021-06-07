@@ -1,7 +1,7 @@
 package org.cloud.server.commands;
 
 import org.cloud.server.commands.factory.CommandFactory;
-import org.cloud.server.message.InputCommandMessage;
+//import org.cloud.server;
 
 public class CommandInput {
     private CommandFactory _commandFactory;
@@ -10,9 +10,9 @@ public class CommandInput {
         _commandFactory = commandFactory;
     }
 
-    public Command getCommand(String input) {
+//    public Command getCommand(String input) {
 //        var org.cloud.server.message = ParseOptions(input);
-
-        return _commandFactory.CreateCommand(new InputCommandMessage());
-    }
+//
+//        return _commandFactory.CreateCommand(new InputCommandMessage());
+//    }
 }
