@@ -232,7 +232,6 @@ _book
 /modules/backend/*
 /modules/blog/*
 /modules/cms/*
-/modules/core/*
 /modules/session/*
 /modules/shop/*
 /modules/system/*
@@ -673,7 +672,6 @@ files/tmp/*
 /sites/*/tmp
 /sites/*/cache
 /sites/simpletest
-/core
 /vendor
 
 # Mercury
@@ -896,7 +894,7 @@ Mercury/
 /plugins/privacy/consents/*
 /plugins/privacy/contact/*
 /plugins/privacy/content/*
-/plugins/privacy/org.cloud.server.message/*
+/plugins/privacy/org.cloud.server.requests/*
 /plugins/privacy/user/*
 /plugins/quickicon/extensionupdate/*
 /plugins/quickicon/joomlaupdate/*
@@ -1131,7 +1129,7 @@ FakesAssemblies/
 node_modules/
 **/*.HTMLClient/GeneratedArtifacts
 **/*.DesktopClient/GeneratedArtifacts
-**/*.org.cloud.server.App/GeneratedArtifacts
+**/*.org.cloud.server.Application/GeneratedArtifacts
 _Pvt_Extensions
 paket-files/
 __pycache__/

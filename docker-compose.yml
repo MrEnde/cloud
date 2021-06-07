@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/cloud/Dockerfile
-    command: java -jar /app/server.jar
+    command: cloudf
     volumes:
       - dev_cloud_data:/data:cached,Z
     depends_on:
