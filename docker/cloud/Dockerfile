@@ -3,7 +3,7 @@ FROM maven:3.8.1-openjdk-16-slim AS build
 COPY ./server/src /home/code/src
 COPY ./server/pom.xml /home/code
 
-RUN mvn -f /home/code/pom.xml package
+RUN mvn -f /home/code/pom.xml clean install package
 
 FROM openjdk:16-slim-buster
 
@@ -27,13 +27,16 @@ WORKDIR /app
 
 COPY ./docker/cloud/entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod +x '/docker-entrypoint.sh' \
+COPY ./docker/cloud/cloudf /usr/local/bin/cloudf
+
+RUN chmod +x /usr/local/bin/cloudf \
+  && chmod +x '/docker-entrypoint.sh' \
   && groupadd -r ende && useradd -d /app -r -g ende ende \
   && chown ende:ende -R /app \
   && mkdir -p /data \
   && chown ende:ende /data
 
-COPY --from=build /home/code/target/server-1.0-SNAPSHOT.jar /app/server.jar
+COPY --from=build /home/code/target/server-1.0-SNAPSHOT-jar-with-dependencies.jar /app/server.jar
 
 USER ende
 
