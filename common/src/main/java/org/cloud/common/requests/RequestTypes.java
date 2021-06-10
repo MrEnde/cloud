@@ -1,4 +1,4 @@
-package requests;
+package org.cloud.common.requests;
 
 public enum RequestTypes {
     CREATE_FILE(),
@@ -13,5 +13,7 @@ public enum RequestTypes {
     RENAME_FILE(),
     RENAME_DIR(),
     GET_PATH(),
-    EXIT()
+    EXIT(),
+    AUTHENTICATION(),
+    REGISTRATION()
 }
