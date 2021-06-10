@@ -7,7 +7,7 @@ import org.cloud.server.models.utils.DbSessionsFactory;
 
 
 public class AccountContext {
-    private void create(String firstName, String lastName, String nick,
+    public void create(String firstName, String lastName, String nick,
                         String login, String password) {
         var account = Account
                 .builder()
@@ -24,6 +24,12 @@ public class AccountContext {
     public Account findById(Long id) {
         try (var session = DbSessionsFactory.getSessionFactory().openSession()) {
             return session.get(Account.class, id);
+        }
+    }
+
+    public Account findByLogin(String login) {
+        try (var session = DbSessionsFactory.getSessionFactory().openSession()) {
+            return session.get(Account.class, login);
         }
     }
 
