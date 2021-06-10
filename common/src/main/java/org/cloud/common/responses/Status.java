@@ -1,4 +1,4 @@
-package responses;
+package org.cloud.common.responses;
 
 
 public enum Status {
@@ -10,7 +10,8 @@ public enum Status {
     UNAUTHORIZED(401),
     FORBIDDEN(403),
     NOT_FOUND(404),
-    COMMAND_NOT_ALLOWED(405),
+    REQUEST_NOT_ALLOWED(405),
+    NOT_ACCEPTABLE(406),
     INTERNAL_SERVER_ERROR(500);
 
     Status(int code) {
