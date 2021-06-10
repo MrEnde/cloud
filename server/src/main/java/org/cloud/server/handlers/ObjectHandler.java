@@ -4,7 +4,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import requests.Request;
+import org.cloud.common.requests.Request;
+
 
 @Slf4j
 public class ObjectHandler extends SimpleChannelInboundHandler<Request> {
