@@ -1,22 +1,28 @@
 package org.cloud.server.commands;
 
-import java.util.Map;
+import org.cloud.common.requests.RequestTypes;
 
-public class CreateFileCommand implements Command {
-    private final String _name = "touch ";
+import java.io.Serializable;
 
-    @Override
-    public String getName() {
-        return _name;
+public class CreateFileCommand implements Command<Serializable> {
+    private final RequestTypes requestType;
+
+    public CreateFileCommand() {
+        requestType = RequestTypes.CREATE_FILE;
     }
 
     @Override
-    public void setOption(Map<String, ?> options) {
+    public RequestTypes getRequestType() {
+        return requestType;
+    }
+
+    @Override
+    public void setData(Serializable data) {
 
     }
 
     @Override
-    public void execute() {
-
+    public Serializable call() {
+        return null;
     }
 }

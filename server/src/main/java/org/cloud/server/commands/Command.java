@@ -1,10 +1,13 @@
 package org.cloud.server.commands;
 
-import java.util.Map;
+import java.io.Serializable;
+import java.util.concurrent.Callable;
 
-public interface Command {
-    String getName();
+import org.cloud.common.requests.RequestTypes;
 
-    void setOption(Map<String, ?> options);
-    void execute();
+public interface Command<R extends Serializable> extends Callable<R> {
+    RequestTypes getRequestType();
+    void setData(Serializable data);
+
+    R call();
 }

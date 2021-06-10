@@ -1,18 +1,18 @@
 package org.cloud.server.commands;
 
 import org.cloud.server.commands.factory.CommandFactory;
-//import org.cloud.server;
+
+import java.io.Serializable;
 
 public class CommandInput {
-    private CommandFactory _commandFactory;
+    private CommandFactory<Serializable> _commandFactory;
 
-    public CommandInput(CommandFactory commandFactory) {
+    public CommandInput(CommandFactory<Serializable> commandFactory) {
         _commandFactory = commandFactory;
     }
 
-//    public Command getCommand(String input) {
-//        var org.cloud.server.message = ParseOptions(input);
-//
-//        return _commandFactory.CreateCommand(new InputCommandMessage());
-//    }
+    public Command getCommand(Serializable data) {
+
+        return _commandFactory.CreateCommand(data);
+    }
 }

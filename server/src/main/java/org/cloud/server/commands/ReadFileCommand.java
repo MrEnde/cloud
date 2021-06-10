@@ -1,22 +1,30 @@
 package org.cloud.server.commands;
 
-import java.util.Map;
+import org.cloud.common.requests.RequestTypes;
 
-public class ReadFileCommand implements Command {
-    private final String _name = "cat ";
 
-    @Override
-    public String getName() {
-        return _name;
+import java.io.Serializable;
+
+public class ReadFileCommand implements Command<Serializable> {
+
+    private final RequestTypes requestType;
+
+    public ReadFileCommand() {
+        requestType = RequestTypes.READ_FILE;
     }
 
     @Override
-    public void setOption(Map<String, ?> options) {
+    public RequestTypes getRequestType() {
+        return requestType;
+    }
+
+    @Override
+    public void setData(Serializable data) {
 
     }
 
     @Override
-    public void execute() {
-        System.out.println("Hello");
+    public Serializable call() {
+        return null;
     }
 }
