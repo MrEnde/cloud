@@ -1,9 +1,12 @@
 FROM maven:3.8.1-openjdk-16-slim AS build
 
-COPY ./server/src /home/code/src
-COPY ./server/pom.xml /home/code
-
-RUN mvn -f /home/code/pom.xml clean install package
+COPY ./server/src /home/code/server/src
+COPY ./server/pom.xml /home/code/server
+COPY ./common/src /home/code/common/src
+COPY ./common/pom.xml /home/code/common
+COPY ./pom.xml /home/code/
+RUN mvn -f /home/code/pom.xml install
+RUN mvn -f /home/code/server/pom.xml clean install package
 
 FROM openjdk:16-slim-buster
 
@@ -36,7 +39,7 @@ RUN chmod +x /usr/local/bin/cloudf \
   && mkdir -p /data \
   && chown ende:ende /data
 
-COPY --from=build /home/code/target/server-1.0-SNAPSHOT-jar-with-dependencies.jar /app/server.jar
+COPY --from=build /home/code/server/target/server-1.0-SNAPSHOT-jar-with-dependencies.jar /app/server.jar
 
 USER ende
 
