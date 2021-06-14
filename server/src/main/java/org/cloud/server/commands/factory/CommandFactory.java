@@ -6,6 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface CommandFactory<E extends Serializable> {
-    List<Command> GetCommands();
-    Command CreateCommand(E message);
+    List<Command<Serializable>> getCommands();
+    Command<Serializable> createCommand(E message);
 }

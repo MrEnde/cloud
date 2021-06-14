@@ -8,7 +8,7 @@ import org.cloud.server.models.utils.DbSessionsFactory;
 
 public class AccountContext {
     public void create(String firstName, String lastName, String nick,
-                        String login, String password) {
+                        String login, String password, String email) {
         var account = Account
                 .builder()
                 .firstName(firstName)
@@ -16,6 +16,7 @@ public class AccountContext {
                 .nick(nick)
                 .login(login)
                 .password(password)
+                .email(email)
                 .dateJoined(new Date())
                 .build();
         save(account);

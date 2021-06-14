@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ende</property>
-        <property name="hibernate.connection.username">ende</property>
-        <property name="hibernate.connection.password">ende</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://db:5432/endor</property>
+        <property name="hibernate.connection.username">endor</property>
+        <property name="hibernate.connection.password">endor</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hibernate.show_sql">true</property>
     </session-factory>

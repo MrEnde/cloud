@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -11,7 +8,7 @@
     <HBox VBox.vgrow="ALWAYS">
         <ComboBox fx:id="disksBox" onAction="#selectDiskAction"/>
         <TextField fx:id="pathField" editable="false" HBox.hgrow="ALWAYS"/>
-        <Button text="Up" onAction="#btnPathUpAction"/>
+        <Button text="Up" onAction="#pathUpAction"/>
     </HBox>
     <TableView fx:id="filesTable" VBox.vgrow="ALWAYS"/>
     <properties>

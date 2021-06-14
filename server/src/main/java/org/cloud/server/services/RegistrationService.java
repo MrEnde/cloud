@@ -16,7 +16,7 @@ import java.util.UUID;
 public class RegistrationService implements Service<UUID> {
     private RegistrationData data;
     private Channel channel;
-    private Properties settings = Settings.getSettings();
+    private final Properties settings = Settings.getSettings();
 
     @Override
     public RequestTypes getType() {
@@ -38,7 +38,7 @@ public class RegistrationService implements Service<UUID> {
     public UUID call() {
         var context = new AccountContext();
         context.create(data.getFirstName(), data.getLastName(),
-                data.getNick(), data.getLogin(), data.getPassword());
+                data.getNick(), data.getLogin(), data.getPassword(), data.getEmail());
         createPathFromLogin(data.getLogin());
         var account = context.findByLogin(data.getLogin());
         var sessionPool = SessionPool.getSessionPool();
