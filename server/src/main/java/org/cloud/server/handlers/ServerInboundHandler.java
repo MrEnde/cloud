@@ -1,32 +1,28 @@
 package org.cloud.server.handlers;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.cloud.server.commands.executor.CommandExecutor;
+import org.cloud.server.commands.factory.DefaultCommandFactory;
+import org.cloud.server.messages.Message;
 
 @Slf4j
-public class ServerInboundHandler extends ChannelInboundHandlerAdapter {
+public class ServerInboundHandler extends SimpleChannelInboundHandler<Message> {
+    private CommandExecutor executor;
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        log.debug("Client connected");
+    public ServerInboundHandler() {
+        executor = new CommandExecutor(new DefaultCommandFactory());
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) {
-        log.debug("Client disconnected");
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf buf = (ByteBuf) msg;
-        log.debug("buf: {}", buf);
-        StringBuilder sb = new StringBuilder();
-        while (buf.isReadable()) {
-            sb.append((char) buf.readByte());
-        }
-        log.debug("received: {}", sb);
-        ctx.fireChannelRead(sb.toString());
+    protected void channelRead0(ChannelHandlerContext ctx, Message message) {
+        log.info("{}", message.getRequestType());
+        var command = executor.getCommand(message);
+        var result = executor.execute(command);
+        message.setStatus(result.getRight());
+        message.setData(result.getLeft());
+        log.info("{}", result.getRight());
+        ctx.fireChannelRead(message);
     }
 }

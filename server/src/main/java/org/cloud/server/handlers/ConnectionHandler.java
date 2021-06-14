@@ -4,24 +4,21 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cloud.common.responses.data.AuthenticationResult;
-import org.cloud.server.services.ServiceFactory;
+import org.cloud.common.requests.RequestTypes;
+import org.cloud.server.messages.Message;
 
-import org.cloud.common.requests.Request;
 import org.cloud.common.responses.Response;
 import org.cloud.common.responses.Status;
 
 import org.cloud.server.core.SessionPool;
 
-import java.util.UUID;
-
 @Slf4j
-public class ConnectionHandler extends SimpleChannelInboundHandler<Request> {
+public class ConnectionHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         log.debug("Connected: {}", ctx.channel().remoteAddress());
-        ctx.writeAndFlush(new Response(Status.UNAUTHORIZED));
+        // ctx.writeAndFlush(new Response(Status.UNAUTHORIZED));
     }
 
     @Override
@@ -30,32 +27,22 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<Request> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Request request) {
-        System.out.println(request.getType());
-        var sessionId = request.getSessionId();
+    protected void channelRead0(ChannelHandlerContext ctx, Message msg) {
+        var sessionId = msg.getSessionId();
+        log.info("{}", msg.getRequestType());
         if (sessionId != null) {
             var sessionPool = SessionPool.getSessionPool();
             if (sessionPool.getSessionOrNull(sessionId) != null) {
-                ctx.fireChannelRead(request);
+                ctx.fireChannelRead(msg);
                 return;
             }
         }
-        var service = new ServiceFactory().getService(request.getType());
-        if (service == null) {
-            ctx.writeAndFlush(new Response(Status.REQUEST_NOT_ALLOWED));
+        var requestType = msg.getRequestType();
+        if (requestType.equals(RequestTypes.AUTHENTICATION) || requestType.equals(RequestTypes.REGISTRATION)) {
+            ctx.fireChannelRead(msg);
             return;
         }
-
-        service.setData(request.getData());
-        service.setChannel(ctx.channel());
-        try {
-            var newSessionId = (UUID) service.call();
-            ctx.writeAndFlush(new Response(Status.CREATED, new AuthenticationResult(newSessionId)));
-        } catch (Exception e) {
-            ctx.write(new Response(Status.NOT_ACCEPTABLE));
-            ctx.write(new Response(Status.UNAUTHORIZED));
-            ctx.flush();
-        }
+        log.error("Error");
     }
 
     @Override

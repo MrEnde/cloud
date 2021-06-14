@@ -9,40 +9,40 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SessionPool {
-    private static volatile SessionPool _sessionPool;
-    private final ConcurrentMap<UUID, Session> _session = new ConcurrentHashMap<>();
+    private static volatile SessionPool sessionPool;
+    private final ConcurrentMap<UUID, Session> session = new ConcurrentHashMap<>();
 
     public static SessionPool getSessionPool() {
-        var result = _sessionPool;
+        var result = sessionPool;
 
         if (result != null) {
             return result;
         }
 
         synchronized(SessionPool.class) {
-            if (_sessionPool == null) {
+            if (sessionPool == null) {
                 try {
-                    _sessionPool = new SessionPool();
+                    sessionPool = new SessionPool();
                 } catch (Exception e) {
                     log.error("Error create ConnectionPool: ", e);
                 }
             }
-            return _sessionPool;
+            return sessionPool;
         }
     }
 
     public UUID createSession(Channel channel, Long userId) {
-        var session = new Session(channel, userId);
-        save(session);
-        return session.getId();
+        var newSession = new Session(channel, userId);
+        save(newSession);
+        return newSession.getId();
     }
 
-    public void save(Session session) {
-        _session.put(session.getId(), session);
+    public void save(Session newSession) {
+        session.put(newSession.getId(), newSession);
     }
 
     public Session getSessionOrNull(UUID id) {
-        return _session.getOrDefault(id,null);
+        return session.getOrDefault(id,null);
     }
 
 }

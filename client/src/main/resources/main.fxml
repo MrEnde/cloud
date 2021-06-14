@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.cloud.client.controllers.MainController">
     <MenuBar>
         <Menu text="file">
@@ -18,6 +18,16 @@
     <HBox VBox.vgrow="ALWAYS">
         <fx:include fx:id="leftPanel" source="panel.fxml" HBox.hgrow="ALWAYS" />
         <fx:include fx:id="rightPanel" source="panel.fxml" HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <HBox maxWidth="Infinity">
+        <HBox alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS">
+            <Label maxWidth="Infinity" text="Your files"  />
+        </HBox>
+
+        <HBox alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS">
+            <Label maxWidth="Infinity" text="Server files"  />
+        </HBox>
     </HBox>
 
     <HBox spacing="5">

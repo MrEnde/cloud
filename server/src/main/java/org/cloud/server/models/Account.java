@@ -1,7 +1,7 @@
 package org.cloud.server.models;
 
+import jakarta.validation.constraints.Email;
 import lombok.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,6 +36,10 @@ public class Account implements Model {
     @Column(name = "password", nullable = false)
     @Size(min = 8, max = 30)
     private String password;
+
+    @Column(name = "email", nullable = false)
+    @Email
+    private String email;
 
     @Column(name = "data_joined", nullable = false)
     @Temporal(TemporalType.DATE)

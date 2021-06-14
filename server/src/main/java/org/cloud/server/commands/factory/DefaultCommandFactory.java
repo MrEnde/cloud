@@ -1,5 +1,6 @@
 package org.cloud.server.commands.factory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,11 @@ import org.reflections.Reflections;
 
 @Slf4j
 public class DefaultCommandFactory implements CommandFactory<Message>  {
-    private volatile List<Command> _commands;
+    private volatile List<Command<Serializable>> _commands;
 
     @Override
     @SneakyThrows
-    public List<Command> GetCommands() {
+    public List<Command<Serializable>> getCommands() {
         var result = _commands;
 
         if (result != null) {
@@ -39,8 +40,8 @@ public class DefaultCommandFactory implements CommandFactory<Message>  {
     }
 
     @Override
-    public Command CreateCommand(Message message) {
-        for (var command : GetCommands()) {
+    public Command<Serializable> createCommand(Message message) {
+        for (var command : getCommands()) {
             if(command.getRequestType().equals(message.getRequestType())) {
                 command.setData(message.getData());
                 return command;
